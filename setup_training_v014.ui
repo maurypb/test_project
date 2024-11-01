@@ -1,0 +1,1682 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1133</width>
+    <height>766</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Cantarell</family>
+    <weight>50</weight>
+    <bold>false</bold>
+    <kerning>false</kerning>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Maury's Model Trainer</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="iconSize">
+   <size>
+    <width>56</width>
+    <height>24</height>
+   </size>
+  </property>
+  <property name="animated">
+   <bool>false</bool>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>false</bool>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>1111</width>
+      <height>741</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Cantarell</family>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+      <kerning>false</kerning>
+     </font>
+    </property>
+    <property name="tabPosition">
+     <enum>QTabWidget::North</enum>
+    </property>
+    <property name="tabShape">
+     <enum>QTabWidget::Rounded</enum>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <property name="elideMode">
+     <enum>Qt::ElideNone</enum>
+    </property>
+    <property name="usesScrollButtons">
+     <bool>false</bool>
+    </property>
+    <property name="documentMode">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="tab_train">
+     <attribute name="title">
+      <string>Training</string>
+     </attribute>
+     <widget class="QFrame" name="frame_3">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>-10</y>
+        <width>1111</width>
+        <height>661</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QFrame" name="frame_model_params">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>370</x>
+         <y>10</y>
+         <width>281</width>
+         <height>231</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+       </property>
+       <widget class="QGroupBox" name="grp_tile_size">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>121</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string>Select the training tile size.</string>
+        </property>
+        <property name="title">
+         <string>Tile size</string>
+        </property>
+        <widget class="QRadioButton" name="rdo_tile_512">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>40</y>
+           <width>121</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>512x512 tiles</string>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="rdo_tile_256">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>20</y>
+           <width>121</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>256x256 tiles</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QSpinBox" name="spinBox_scales">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>100</y>
+          <width>126</width>
+          <height>42</height>
+         </rect>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>5</number>
+        </property>
+        <property name="value">
+         <number>4</number>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_5">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>112</y>
+          <width>121</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Number of Scales</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_12">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>151</y>
+          <width>121</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Residual Blocks</string>
+        </property>
+       </widget>
+       <widget class="QSpinBox" name="spinBox_residual_blocks">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>140</y>
+          <width>126</width>
+          <height>42</height>
+         </rect>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>32</number>
+        </property>
+        <property name="value">
+         <number>14</number>
+        </property>
+       </widget>
+       <widget class="QGroupBox" name="groupBox">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>20</y>
+          <width>121</width>
+          <height>80</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Cantarell</family>
+          <pointsize>12</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+          <kerning>false</kerning>
+         </font>
+        </property>
+        <property name="title">
+         <string>Model Features</string>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+        <widget class="QCheckBox" name="checkBox_use_attention">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>40</y>
+           <width>91</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Attention</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="checkBox_use_pyramid">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>161</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Pyramid </string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QLabel" name="label_13">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>191</y>
+          <width>111</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Base Features</string>
+        </property>
+       </widget>
+       <widget class="QSpinBox" name="spinBox_base_features">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>180</y>
+          <width>126</width>
+          <height>42</height>
+         </rect>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>32</number>
+        </property>
+        <property name="value">
+         <number>14</number>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_15">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>0</y>
+          <width>171</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Cantarell</family>
+          <pointsize>7</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+          <kerning>false</kerning>
+         </font>
+        </property>
+        <property name="text">
+         <string>Model Parameters</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QFrame" name="imagesFrame">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>351</width>
+         <height>91</height>
+        </rect>
+       </property>
+       <property name="toolTipDuration">
+        <number>18</number>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QLineEdit" name="lineEdit_training_root_dir">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>40</y>
+          <width>221</width>
+          <height>36</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string extracomment="This directory must contain subdirectories &quot;source_images&quot; and &quot;target_images&quot;. If a &quot;models&quot; subdirectory doesn't exist, it will be created."/>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btn_training_root_browse">
+        <property name="geometry">
+         <rect>
+          <x>230</x>
+          <y>40</y>
+          <width>100</width>
+          <height>36</height>
+         </rect>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+        <property name="toolTip">
+         <string extracomment="This directory must contain subdirectories &quot;source_images&quot; and &quot;target_images&quot;. If a &quot;models&quot; subdirectory doesn't exist, it will be created."/>
+        </property>
+        <property name="text">
+         <string>browse</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_14">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>22</y>
+          <width>171</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+        <property name="toolTip">
+         <string extracomment="This directory must contain subdirectories &quot;source_images&quot; and &quot;target_images&quot;. If a &quot;models&quot; subdirectory doesn't exist, it will be created."/>
+        </property>
+        <property name="text">
+         <string>Training Root Directory</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QFrame" name="frame_select_model">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>104</y>
+         <width>351</width>
+         <height>151</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QGroupBox" name="groupBox_select_model">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>9</x>
+          <y>14</y>
+          <width>331</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Cantarell</family>
+          <pointsize>11</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+          <kerning>false</kerning>
+         </font>
+        </property>
+        <property name="title">
+         <string/>
+        </property>
+        <widget class="QRadioButton" name="rdo_use_previous_best_model">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>281</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Continue from Previous Best Model</string>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="rdo_select_existing_model">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>40</y>
+           <width>241</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Select another Existing Model</string>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="rdo_make_new_model">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>20</y>
+           <width>321</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Make a new model, and start from scratch</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QFrame" name="frame_select_existing_model">
+        <property name="geometry">
+         <rect>
+          <x>5</x>
+          <y>80</y>
+          <width>341</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <widget class="QPushButton" name="btn_select_existing_model">
+         <property name="geometry">
+          <rect>
+           <x>230</x>
+           <y>20</y>
+           <width>100</width>
+           <height>36</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>browse</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit_selected_model">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>211</width>
+           <height>36</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_3">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>0</y>
+           <width>211</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Select existing model:</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QLabel" name="label_7">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>0</y>
+          <width>161</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Cantarell</family>
+          <pointsize>7</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+          <kerning>false</kerning>
+         </font>
+        </property>
+        <property name="text">
+         <string>Model Selection</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QFrame" name="frame_training_params">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>660</x>
+         <y>10</y>
+         <width>391</width>
+         <height>231</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QLabel" name="ChampionImprovementpct_4">
+        <property name="geometry">
+         <rect>
+          <x>7</x>
+          <y>111</y>
+          <width>191</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Champion Improvement %</string>
+        </property>
+       </widget>
+       <widget class="QSpinBox" name="spinBox_save_interval">
+        <property name="geometry">
+         <rect>
+          <x>196</x>
+          <y>60</y>
+          <width>126</width>
+          <height>42</height>
+         </rect>
+        </property>
+        <property name="minimum">
+         <number>10</number>
+        </property>
+        <property name="maximum">
+         <number>1000</number>
+        </property>
+        <property name="singleStep">
+         <number>10</number>
+        </property>
+        <property name="value">
+         <number>100</number>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_9">
+        <property name="geometry">
+         <rect>
+          <x>7</x>
+          <y>31</y>
+          <width>181</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Batch Size</string>
+        </property>
+       </widget>
+       <widget class="QSpinBox" name="spinBox_champion_improvement_pct">
+        <property name="geometry">
+         <rect>
+          <x>196</x>
+          <y>100</y>
+          <width>126</width>
+          <height>42</height>
+         </rect>
+        </property>
+        <property name="minimum">
+         <number>2</number>
+        </property>
+        <property name="maximum">
+         <number>100</number>
+        </property>
+        <property name="singleStep">
+         <number>1</number>
+        </property>
+        <property name="value">
+         <number>10</number>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_10">
+        <property name="geometry">
+         <rect>
+          <x>7</x>
+          <y>71</y>
+          <width>181</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Autosave Interval</string>
+        </property>
+       </widget>
+       <widget class="QSpinBox" name="spinBox_batch_size">
+        <property name="geometry">
+         <rect>
+          <x>196</x>
+          <y>20</y>
+          <width>126</width>
+          <height>42</height>
+         </rect>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>64</number>
+        </property>
+        <property name="value">
+         <number>16</number>
+        </property>
+       </widget>
+       <widget class="QLabel" name="ChampionImprovementpct_5">
+        <property name="geometry">
+         <rect>
+          <x>7</x>
+          <y>150</y>
+          <width>181</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Training Epochs</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="ChampionImprovementpct_6">
+        <property name="geometry">
+         <rect>
+          <x>7</x>
+          <y>184</y>
+          <width>181</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Learning Rate</string>
+        </property>
+       </widget>
+       <widget class="QDoubleSpinBox" name="doubleSpinBox_learning_rate">
+        <property name="geometry">
+         <rect>
+          <x>196</x>
+          <y>180</y>
+          <width>191</width>
+          <height>42</height>
+         </rect>
+        </property>
+        <property name="decimals">
+         <number>9</number>
+        </property>
+        <property name="minimum">
+         <double>0.000001000000000</double>
+        </property>
+        <property name="maximum">
+         <double>1.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.000010000000000</double>
+        </property>
+        <property name="value">
+         <double>0.000100000000000</double>
+        </property>
+       </widget>
+       <widget class="QSpinBox" name="spinBox_num_epochs">
+        <property name="geometry">
+         <rect>
+          <x>196</x>
+          <y>140</y>
+          <width>191</width>
+          <height>42</height>
+         </rect>
+        </property>
+        <property name="minimum">
+         <number>2</number>
+        </property>
+        <property name="maximum">
+         <number>9999999</number>
+        </property>
+        <property name="singleStep">
+         <number>100</number>
+        </property>
+        <property name="value">
+         <number>8000</number>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_16">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>0</y>
+          <width>171</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Cantarell</family>
+          <pointsize>7</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+          <kerning>false</kerning>
+         </font>
+        </property>
+        <property name="text">
+         <string>Training Parameters</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QLabel" name="label_29">
+       <property name="geometry">
+        <rect>
+         <x>13</x>
+         <y>15</y>
+         <width>171</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Cantarell</family>
+         <pointsize>7</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+         <kerning>false</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Sources </string>
+       </property>
+      </widget>
+      <widget class="QFrame" name="frame_5">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>270</y>
+         <width>351</width>
+         <height>131</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QProgressBar" name="progressBar_current_epoch">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>32</y>
+          <width>331</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="value">
+         <number>0</number>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_2">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>141</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Current Epoch</string>
+        </property>
+       </widget>
+       <widget class="QProgressBar" name="progressBar_overall_progress">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>80</y>
+          <width>331</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="value">
+         <number>0</number>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_4">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>58</y>
+          <width>141</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Overall Progress</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_current_loss">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>100</y>
+          <width>281</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>current loss:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_8">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>0</y>
+          <width>161</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Cantarell</family>
+          <pointsize>7</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+          <kerning>false</kerning>
+         </font>
+        </property>
+        <property name="text">
+         <string>Training Progress</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QFrame" name="frame_7">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>400</y>
+         <width>351</width>
+         <height>111</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QTextEdit" name="textValidation_message">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>321</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="html">
+         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Cantarell','Cantarell'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_11">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>2</y>
+          <width>161</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Cantarell</family>
+          <pointsize>7</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+          <kerning>false</kerning>
+         </font>
+        </property>
+        <property name="text">
+         <string>Messages</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QFrame" name="frame_8">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>520</y>
+         <width>351</width>
+         <height>111</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QPushButton" name="btn_pause_training">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>60</y>
+          <width>331</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Pause Training</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btn_start_training">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>15</y>
+          <width>331</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Start/Resume Training</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_19">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>0</y>
+          <width>161</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Cantarell</family>
+          <pointsize>7</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+          <kerning>false</kerning>
+         </font>
+        </property>
+        <property name="text">
+         <string>Master Controls</string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_preview">
+     <attribute name="title">
+      <string>Preview Current Model</string>
+     </attribute>
+     <widget class="QFrame" name="frame_6">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>1041</width>
+        <height>641</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="ImageViewer" name="preview_viewer" native="true">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>20</y>
+         <width>991</width>
+         <height>521</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QTextBrowser" name="textBrowser">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>580</y>
+         <width>781</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="html">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Cantarell','Cantarell'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Cantarell'; font-size:11pt;&quot;&gt;Drag and Drop images into the window above.  &lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Cantarell'; font-size:9pt;&quot;&gt;Use the mouse and wheel to pan/zoom, &amp;quot;R&amp;quot; to reset.  Click Preview to see the currently loaded model applied.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btn_preview_inference">
+       <property name="geometry">
+        <rect>
+         <x>860</x>
+         <y>580</y>
+         <width>111</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Preview</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_6">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>0</y>
+         <width>161</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Cantarell</family>
+         <pointsize>7</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+         <kerning>false</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Preview Current Model</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_tile_samples">
+     <attribute name="title">
+      <string>Tile Samples</string>
+     </attribute>
+     <widget class="QLabel" name="lbl_tile_samples">
+      <property name="geometry">
+       <rect>
+        <x>12</x>
+        <y>20</y>
+        <width>1041</width>
+        <height>631</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_interactive_loss">
+     <attribute name="title">
+      <string>Loss Graph (Interactive)</string>
+     </attribute>
+     <widget class="LossGraphWidget" name="lossGraphWidget" native="true">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>1041</width>
+        <height>651</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_batch">
+     <attribute name="title">
+      <string>Batch Inference</string>
+     </attribute>
+     <widget class="QFrame" name="frame_4">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>-10</y>
+        <width>1071</width>
+        <height>641</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <property name="lineWidth">
+       <number>1</number>
+      </property>
+      <property name="midLineWidth">
+       <number>1</number>
+      </property>
+      <widget class="QFrame" name="frame_2">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>10</y>
+         <width>381</width>
+         <height>571</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QFrame" name="frame">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>361</width>
+          <height>401</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <widget class="QFrame" name="frame_select_inference_model">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>341</width>
+           <height>61</height>
+          </rect>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <widget class="QPushButton" name="btn_select_inference_model">
+          <property name="geometry">
+           <rect>
+            <x>230</x>
+            <y>20</y>
+            <width>100</width>
+            <height>36</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>browse</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_inference_model">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>20</y>
+            <width>211</width>
+            <height>36</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_17">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>0</y>
+            <width>211</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Select Trained Model</string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QFrame" name="frame_select_inference_output_dir">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>150</y>
+           <width>341</width>
+           <height>61</height>
+          </rect>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <widget class="QPushButton" name="btn_select_inference_output_dir">
+          <property name="geometry">
+           <rect>
+            <x>230</x>
+            <y>20</y>
+            <width>100</width>
+            <height>36</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>browse</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_inference_output_dir">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>20</y>
+            <width>211</width>
+            <height>36</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_20">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>0</y>
+            <width>211</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Select Output Directory</string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QFrame" name="frame_select_inference_source_dir">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>80</y>
+           <width>341</width>
+           <height>61</height>
+          </rect>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <widget class="QPushButton" name="btn_select_inference_source_dir">
+          <property name="geometry">
+           <rect>
+            <x>230</x>
+            <y>20</y>
+            <width>100</width>
+            <height>36</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>browse</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_inference_source_dir">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>20</y>
+            <width>211</width>
+            <height>36</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_18">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>0</y>
+            <width>211</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Select Source Directory</string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QFrame" name="frame_inference_ouput_prefix">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>220</y>
+           <width>341</width>
+           <height>81</height>
+          </rect>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <widget class="QLabel" name="label_31">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>131</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>output prefix:</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_inference_output_prefix">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>321</width>
+            <height>36</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>inferred_</string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QFrame" name="frame_inference_output_format">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>310</y>
+           <width>341</width>
+           <height>81</height>
+          </rect>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <widget class="QComboBox" name="comboBox_inference_output_format">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>321</width>
+            <height>38</height>
+           </rect>
+          </property>
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <item>
+           <property name="text">
+            <string>.exr</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>.tiff</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>.jpg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>.png</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QLabel" name="label_30">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>8</y>
+            <width>211</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Select Output Image Format</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+       <widget class="QLabel" name="label_21">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>10</y>
+          <width>101</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Cantarell</family>
+          <pointsize>7</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+          <kerning>false</kerning>
+         </font>
+        </property>
+        <property name="text">
+         <string>Batch Process</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btn_start_inference">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>460</y>
+          <width>361</width>
+          <height>101</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Process All Images In Source Directory</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QFrame" name="frame_9">
+       <property name="geometry">
+        <rect>
+         <x>430</x>
+         <y>10</y>
+         <width>591</width>
+         <height>581</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="ImageViewer" name="imageViewer" native="true">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>30</y>
+          <width>531</width>
+          <height>441</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string extracomment="drag an image here to view it."/>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>480</y>
+          <width>561</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Cantarell</family>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+          <kerning>false</kerning>
+         </font>
+        </property>
+        <property name="text">
+         <string>Drag an image into this window to inspect it. Use Mouse to drag, and wheel to zoom.</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btn_test_inference">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>510</y>
+          <width>531</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Run test inference with selected model on this image (This doesn't save it).</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_22">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>10</y>
+          <width>171</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Cantarell</family>
+          <pointsize>7</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+          <kerning>false</kerning>
+         </font>
+        </property>
+        <property name="text">
+         <string>Sample the Selected Model</string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_loss_graph">
+     <attribute name="title">
+      <string>Loss Graph</string>
+     </attribute>
+     <widget class="QLabel" name="lbl_loss_graph">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>1001</width>
+        <height>631</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1133</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionSave_Config"/>
+    <addaction name="actionSave_As"/>
+    <addaction name="actionLoad_Config"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionSave_Config">
+   <property name="text">
+    <string>Save Config</string>
+   </property>
+  </action>
+  <action name="actionLoad_Config">
+   <property name="text">
+    <string>Load Config</string>
+   </property>
+  </action>
+  <action name="actionSave_As">
+   <property name="text">
+    <string>Save As</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ImageViewer</class>
+   <extends>QWidget</extends>
+   <header>pyqt_image_viewer_class_v002</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LossGraphWidget</class>
+   <extends>QWidget</extends>
+   <header>LossGraphWidget_class_v001</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

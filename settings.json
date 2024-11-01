@@ -1,0 +1,29 @@
+{
+    "textBrowser": "Drag and Drop images into the window above.  You can use the mouse and wheel to pan/zoom.  Click Preview to see the currently loaded model applied.",
+    "rdo_tile_512": false,
+    "rdo_tile_256": true,
+    "spinBox_scales": 3,
+    "spinBox_residual_blocks": 28,
+    "checkBox_use_attention": true,
+    "checkBox_use_pyramid": true,
+    "spinBox_base_features": 32,
+    "lineEdit_training_root_dir": "/mnt/tank/PROJECTS/SOFTWARE_PROJECTS/duplidog/test_images/craig_defocus",
+    "rdo_use_previous_best_model": false,
+    "rdo_select_existing_model": false,
+    "rdo_make_new_model": true,
+    "lineEdit_selected_model": "",
+    "spinBox_save_interval": 100,
+    "spinBox_champion_improvement_pct": 10,
+    "spinBox_batch_size": 8,
+    "doubleSpinBox_learning_rate": 0.0001,
+    "spinBox_num_epochs": 24000,
+    "textValidation_message": "Model directory exists, the best model found is /mnt/tank/PROJECTS/SOFTWARE_PROJECTS/duplidog/test_images/craig_defocus/models/champion_epoch_002571_loss_0.000002.pth",
+    "lineEdit_inference_model": "/mnt/tank/PROJECTS/SOFTWARE_PROJECTS/duplidog/test_images/craig_defocus/models/champion_epoch_002571_loss_0.000002.pth",
+    "lineEdit_inference_output_dir": "/mnt/tank/PROJECTS/SOFTWARE_PROJECTS/duplidog/test_images/craig_defocus/processed_241022_720",
+    "lineEdit_inference_source_dir": "/mnt/tank/PROJECTS/SOFTWARE_PROJECTS/duplidog/test_images/craig_defocus/source_sequence",
+    "lineEdit_inference_output_prefix": "inferred_",
+    "comboBox_inference_output_format": {
+        "text": ".png",
+        "index": 3
+    }
+}
