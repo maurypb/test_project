@@ -3,7 +3,7 @@ import logging
 import re
 
 # a meaningless comment here.
-# a third meaningless comment here...
+# a third meaningless comment here..
 
 class ChampionModel:
     def __init__(self, epoch, loss, filename):
