@@ -3,14 +3,13 @@ import logging
 import re
 
 # a meaningless comment here.
-# another meaningless comment here.
+# a third meaningless comment here...
 
 class ChampionModel:
     def __init__(self, epoch, loss, filename):
         self.epoch = epoch
         self.loss = loss
         self.filename = filename
-
 
 class ChampionManager:
     def __init__(self, model_dir, max_champions=10):
