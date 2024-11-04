@@ -1,4 +1,13 @@
 {
+    "lineEdit_inference_model": "/mnt/tank/PROJECTS/SOFTWARE_PROJECTS/duplidog/test_images/craig_defocus/models/champion_epoch_002571_loss_0.000002.pth",
+    "lineEdit_inference_output_dir": "/mnt/tank/PROJECTS/SOFTWARE_PROJECTS/duplidog/test_images/craig_defocus/processed_241022_720",
+    "lineEdit_inference_source_dir": "/mnt/tank/PROJECTS/SOFTWARE_PROJECTS/duplidog/test_images/craig_defocus/source_sequence",
+    "lineEdit_inference_output_prefix": "inferred_",
+    "comboBox_inference_output_format": {
+        "text": ".png",
+        "index": 3
+    },
+    "textBrowser": "Drag and Drop images into the window above.  You can use the mouse and wheel to pan/zoom.  Click Preview to see the currently loaded model applied.",
     "rdo_tile_512": false,
     "rdo_tile_256": true,
     "spinBox_scales": 3,
@@ -16,14 +25,5 @@
     "spinBox_batch_size": 8,
     "doubleSpinBox_learning_rate": 0.0001,
     "spinBox_num_epochs": 24000,
-    "textValidation_message": "Model directory exists, the best model found is /mnt/tank/PROJECTS/SOFTWARE_PROJECTS/duplidog/test_images/craig_defocus/models/champion_epoch_002571_loss_0.000002.pth",
-    "lineEdit_inference_model": "/mnt/tank/PROJECTS/SOFTWARE_PROJECTS/duplidog/test_images/craig_defocus/models/champion_epoch_002571_loss_0.000002.pth",
-    "lineEdit_inference_output_dir": "/mnt/tank/PROJECTS/SOFTWARE_PROJECTS/duplidog/test_images/craig_defocus/processed_241022_720",
-    "lineEdit_inference_source_dir": "/mnt/tank/PROJECTS/SOFTWARE_PROJECTS/duplidog/test_images/craig_defocus/source_sequence",
-    "lineEdit_inference_output_prefix": "inferred_",
-    "comboBox_inference_output_format": {
-        "text": ".png",
-        "index": 3
-    },
-    "textBrowser": "Drag and Drop images into the window above.  You can use the mouse and wheel to pan/zoom.  Click Preview to see the currently loaded model applied."
+    "textValidation_message": "Model directory exists, the best model found is /mnt/tank/PROJECTS/SOFTWARE_PROJECTS/duplidog/test_images/craig_defocus/models/champion_epoch_002571_loss_0.000002.pth"
 }
