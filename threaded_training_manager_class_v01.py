@@ -17,18 +17,6 @@ from io import BytesIO
 import threading
 from PyQt6.QtCore import QObject, pyqtSignal
 from PyQt6.QtGui import QImage
-
-# #********************
-# #note: currently, the msrn_model_v5.py file is in the parent directory of the tiling_system directory.
-# relative_parent_directory_path = os.path.join(os.path.dirname(__file__), '..')
-# # Convert to an absolute path
-# parent_directory_path = os.path.abspath(relative_parent_directory_path)
-
-# # Add the parent directory to sys.path
-# sys.path.append(parent_directory_path)
-# #********************
-
-
 from msrn_model_v5 import MSRNConfig, create_msrn_model_from_config
 import logging
 import time
