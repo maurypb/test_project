@@ -5,7 +5,7 @@ import torchvision.transforms as transforms
 import os
 os.environ["OPENCV_IO_ENABLE_OPENEXR"]="1" #enable exr support in opencv
 import sys
-from torch.utils.tensorboard import SummaryWriter
+#from torch.utils.tensorboard import SummaryWriter
 from torch.utils.data import DataLoader
 #from tiled_dataset_class_v5 import TiledDataset
 from PIL import Image,ImageDraw, ImageFont

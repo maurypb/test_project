@@ -1,5 +1,4 @@
 {
-    "textBrowser": "Drag and Drop images into the window above.  You can use the mouse and wheel to pan/zoom.  Click Preview to see the currently loaded model applied.",
     "rdo_tile_512": false,
     "rdo_tile_256": true,
     "spinBox_scales": 3,
@@ -25,5 +24,6 @@
     "comboBox_inference_output_format": {
         "text": ".png",
         "index": 3
-    }
+    },
+    "textBrowser": "Drag and Drop images into the window above.  You can use the mouse and wheel to pan/zoom.  Click Preview to see the currently loaded model applied."
 }
