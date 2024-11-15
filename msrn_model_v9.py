@@ -113,14 +113,27 @@ class TrainingConfig:
 
 @dataclass
 class TrainingState:
-    """State tracking for training progress and history"""
+    """State tracking for training progress history and operational status"""
+
+    # training progress metrics
     current_epoch: int = 0
     total_epochs: int = 0
     current_loss: float = float('inf')
     best_loss: float = float('inf')
     losses: List[float] = field(default_factory=list)
     champion_epochs: List[int] = field(default_factory=list)
+
+    # Training operational flags
+    is_training: bool = False  # Currently actively training
+    is_paused: bool = False    # Training is paused
+    model_ready: bool = False  # Model is loaded and ready
+
+    # Dataset state
     dataset_signature: Optional[str] = None
+    image_set_validated: bool = False
+
+    # Visualization state
+    visualization_images_opened: bool = False
     
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -128,6 +141,20 @@ class TrainingState:
     @classmethod
     def from_dict(cls, config_dict: Dict[str, Any]) -> 'TrainingState':
         return cls(**config_dict)
+    
+    def pause_training(self):
+        """Pause training and update flags"""
+        self.is_training = False
+        self.is_paused = True
+    
+    def resume_training(self):
+        """Resume training and update flags"""
+        self.is_training = True
+        self.is_paused = False
+    
+    def mark_model_ready(self):
+        """Mark model as ready for inference"""
+        self.model_ready = True
     
 
 # part 2 model components
