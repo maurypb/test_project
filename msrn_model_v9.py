@@ -60,13 +60,36 @@ class TrainingConfig:
     learning_rate: float = 0.0001
     num_epochs: int = 1000
     
+
+    # Loss Configuration  (what is this?)
+    loss_weights: Dict[str, float] = field(
+        default_factory=lambda: {"mse": 1.0, "perceptual": 0.1}
+    )
+
     # Checkpointing Parameters
     save_interval: int = 100
     champion_improvement_threshold: float = 0.1
     
+    # Augmentation Parameters (moved from v5)
+    augmentation_factor: float = 0.2
+    rotation_range: Tuple[float, float] = (-5, 5)
+    scale_range: Tuple[float, float] = (0.95, 1.05)
+    contrast_range: Tuple[float, float] = (0.8, 1.2)
+    brightness_range: Tuple[float, float] = (-0.2, 0.2)
+    hue_range: Tuple[float, float] = (-30, 30)
+    noise_stddev_range: Tuple[float, float] = (0.01, 0.05)
+
     # Memory Management
     vram_limit_gb: Optional[float] = None  # If set, will be used to adjust batch size
-    
+
+    # overlap
+    min_overlap: Tuple[int, int] = (32, 32)  # Added from v5
+
+    # Testing
+    test_image: Optional[str] = None  # Moved from v5
+
+
+
     def validate(self):
         """Validate training parameters"""
         if self.batch_size <= 0:
@@ -77,7 +100,10 @@ class TrainingConfig:
             raise ValueError("champion_improvement_threshold must be positive")
         if self.num_epochs <= 0:
             raise ValueError("num_epochs must be positive")
-
+        if min(self.min_overlap) < 0 or max(self.min_overlap) >= self.tile_size:
+            raise ValueError("min_overlap must be non-negative and less than tile_size")
+        if self.augmentation_factor < 0 or self.augmentation_factor > 1:
+            raise ValueError("augmentation_factor must be between 0 and 1")
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
     
