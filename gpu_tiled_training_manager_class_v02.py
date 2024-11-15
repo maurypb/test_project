@@ -45,7 +45,7 @@ import platform
 import re
 import numpy as np
 from champions_classes import ChampionModel, ChampionManager
-from ModelSaver_class import ModelSaver
+from ModelSaver_class_v02 import ModelSaver
 from gpu_tile_manager_v8 import GPUTileManager
 from Image_load_and_save_methods_v01 import load_image, save_image
 
