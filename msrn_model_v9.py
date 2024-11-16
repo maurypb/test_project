@@ -59,7 +59,11 @@ class TrainingConfig:
     batch_size: int = 32
     learning_rate: float = 0.0001
     num_epochs: int = 1000
-    
+
+    # Tile Generation Parameters
+    min_overlap: Tuple[int, int] = (32, 32)  # Minimum tile overlap for inference
+    sampling_density_factor: float = 1.5  # Controls density of training tile sampling
+
 
     # Loss Configuration  (what is this?)
     loss_weights: Dict[str, float] = field(
@@ -82,8 +86,7 @@ class TrainingConfig:
     # Memory Management
     vram_limit_gb: Optional[float] = None  # If set, will be used to adjust batch size
 
-    # overlap
-    min_overlap: Tuple[int, int] = (32, 32)  # Added from v5
+
 
     # Testing
     test_image: Optional[str] = None  # Moved from v5
@@ -100,10 +103,13 @@ class TrainingConfig:
             raise ValueError("champion_improvement_threshold must be positive")
         if self.num_epochs <= 0:
             raise ValueError("num_epochs must be positive")
-        if min(self.min_overlap) < 0 or max(self.min_overlap) >= self.tile_size:
-            raise ValueError("min_overlap must be non-negative and less than tile_size")
+        if self.sampling_density_factor < 1.0:
+            raise ValueError("sampling_density_factor must be >= 1.0")
+        if min(self.min_overlap) < 0:
+            raise ValueError("min_overlap must be non-negative")
         if self.augmentation_factor < 0 or self.augmentation_factor > 1:
             raise ValueError("augmentation_factor must be between 0 and 1")
+        
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
     
