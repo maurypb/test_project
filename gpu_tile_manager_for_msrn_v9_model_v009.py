@@ -58,6 +58,62 @@ class GPUTileManager:
         # Calculate total tiles using sampling density factor
         self.total_tiles_per_epoch = int((self.sum_of_image_areas // self.tile_area) * 
                                        self.training_config.sampling_density_factor)
+        
+
+        # VRAM tracking
+        self.peak_vram_usage = 0.0
+        self.last_vram_check = 0.0
+        self.vram_warning_threshold = 0.9  # Warn at 90% of limit
+        
+        """
+        TODO: Deep VRAM Integration Enhancement
+        Future implementation could include:
+        1. Use VRAMEstimator.estimate_vram_usage() to calculate safe batch sizes
+        2. Implement tile caching system:
+           - Keep most-needed tiles in GPU memory
+           - Cache other tiles in CPU memory
+           - Smart prefetching based on coverage patterns
+        3. Dynamic batch size adjustment based on:
+           - Current VRAM usage
+           - Tile complexity
+           - Processing patterns
+        4. Coordinate with TiledTrainingManager for global VRAM management
+        """
+
+
+    def _update_vram_tracking(self):
+        """Track VRAM usage and warn if approaching limit"""
+        if not torch.cuda.is_available() or not self.training_config.vram_limit_gb:
+            return
+
+        current_vram = torch.cuda.memory_allocated() / (1024**3)  # Convert to GB
+        self.peak_vram_usage = max(self.peak_vram_usage, current_vram)
+        self.last_vram_check = current_vram
+
+        # Warn if approaching limit
+        if self.training_config.vram_limit_gb:
+            usage_ratio = current_vram / self.training_config.vram_limit_gb
+            if usage_ratio > self.vram_warning_threshold:
+                self.logger.warning(
+                    f"High VRAM usage: {current_vram:.2f}GB / "
+                    f"{self.training_config.vram_limit_gb}GB "
+                    f"({usage_ratio*100:.1f}%)"
+                )
+
+    def get_memory_stats(self) -> Dict[str, float]:
+        """Get current memory usage statistics"""
+        if not torch.cuda.is_available():
+            return {}
+            
+        return {
+            "current_vram_gb": self.last_vram_check,
+            "peak_vram_gb": self.peak_vram_usage,
+            "vram_limit_gb": self.training_config.vram_limit_gb or 0.0,
+            "vram_usage_ratio": (self.last_vram_check / 
+                               self.training_config.vram_limit_gb if self.training_config.vram_limit_gb 
+                               else 0.0)
+        }
+
 
     def generate_epoch_tiles(self) -> int:
         """
@@ -169,7 +225,9 @@ class GPUTileManager:
 
         source_batch = torch.stack(source_batch_tiles).to(self.device, dtype=torch.float32)
         target_batch = torch.stack(target_batch_tiles).to(self.device, dtype=torch.float32)
-        
+
+        self._update_vram_tracking()  # Track VRAM after batch creation
+
         return source_batch, target_batch
 
     def _update_coverage(self, img_idx: int, y: int, x: int):
