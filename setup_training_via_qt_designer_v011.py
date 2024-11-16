@@ -48,13 +48,19 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         loadUi("setup_training_v014.ui", self)
+        # Initialize device
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+     
+        #init paths
         self.training_root=None
         self.source_dir = None
         self.target_dir = None
         self.model_dir=None
-        self.lowest_loss_model=None
         self.selected_model=None
+
+        self.lowest_loss_model=None
+
+
         self.image_set_validated=False
         self.training_ready=False
         self.training_paused=False
