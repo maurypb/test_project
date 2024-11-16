@@ -14,6 +14,7 @@ class GPUTileManager:
                  target_images: List[torch.Tensor],
                  model_config: ModelConfig,
                  training_config: TrainingConfig,
+                 track_coverage: bool = False,
                  device: str = 'cuda'):
         """
         Initialize the GPU Tile Manager.
@@ -37,11 +38,12 @@ class GPUTileManager:
         self.source_images = source_images
         self.target_images = target_images
         
-        # Initialize coverage tracking tensors
-        self.coverage_tensors = [
-            torch.zeros((img.shape[1], img.shape[2]), device=device) 
-            for img in source_images
-        ]
+        if track_coverage:
+            # Initialize coverage tracking tensors
+            self.coverage_tensors = [
+                torch.zeros((img.shape[1], img.shape[2]), device=device) 
+                for img in source_images
+            ]
         
         # Initialize state
         self.current_tiles = []
@@ -111,7 +113,8 @@ class GPUTileManager:
                     x = max(0, min(int(base_x + offset_x), width - self.tile_size))
                     
                     self.current_tiles.append((img_idx, y, x))
-                    self._update_coverage(img_idx, y, x)
+                    if track_coverage:
+                        self._update_coverage(img_idx, y, x)
         
         # Randomize tile order
         np.random.shuffle(self.current_tiles)
