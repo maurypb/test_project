@@ -121,7 +121,10 @@ class GPUTileManager:
     def _calculate_grid_parameters(self, width: int, height: int) -> Tuple[int, int, float, float, float, float]:
         """
         Calculate grid parameters including overlap and maximum allowed offsets.
+<<<<<<< HEAD
         Scales jiggling with sampling density while ensuring no coverage gaps.
+=======
+>>>>>>> 8cde1effe66a66ddd300292e0476b107595a125e
         
         Returns:
             Tuple containing:
@@ -140,11 +143,17 @@ class GPUTileManager:
         overlap_h = ((n_tiles_h * self.tile_size) - width) / (n_tiles_h - 1)
         overlap_v = ((n_tiles_v * self.tile_size) - height) / (n_tiles_v - 1)
         
+<<<<<<< HEAD
         # Calculate maximum offsets scaled by density factor
         jiggle_factor = min(self.training_config.sampling_density_factor, 2.0)
         # Ensure no gaps by limiting to half of overlap
         max_offset_h = min(overlap_h/2, self.tile_size * 0.25 * jiggle_factor)
         max_offset_v = min(overlap_v/2, self.tile_size * 0.25 * jiggle_factor)
+=======
+        # Calculate maximum offsets (limit to 1/4 of tile size)
+        max_offset_h = min(overlap_h, self.tile_size / 4)
+        max_offset_v = min(overlap_v, self.tile_size / 4)
+>>>>>>> 8cde1effe66a66ddd300292e0476b107595a125e
         
         return n_tiles_h, n_tiles_v, overlap_h, overlap_v, max_offset_h, max_offset_v
 
