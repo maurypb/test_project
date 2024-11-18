@@ -1,0 +1,198 @@
+import torch
+import numpy as np
+import logging
+from typing import List, Tuple, Optional, Dict
+from dataclasses import dataclass
+from msrn_model_v9 import ModelConfig, TrainingConfig
+
+@dataclass
+class TileGenerationStats:
+    """Statistics about tile generation and usage"""
+    total_tiles: int
+    overlap_h: float
+    overlap_v: float
+    coverage_ratio: float
+    vram_usage_gb: Optional[float] = None
+
+class TileGenerator:
+    """
+    Manages tile generation for MSRN processing with enhanced VRAM awareness
+    and integration with MSRNv9 configuration structure.
+    """
+    def __init__(self, 
+                model_config: ModelConfig,
+                min_overlap: Tuple[int, int] = (16, 16),
+                track_vram: bool = True):
+        """
+        Initialize tile generator with model configuration.
+        
+        Args:
+            model_config: Model architecture configuration
+            min_overlap: Minimum overlap between tiles
+            track_vram: Whether to track VRAM usage
+        """
+        self.logger = logging.getLogger(__name__)
+        self.model_config = model_config
+        self.min_overlap = min_overlap
+        self.track_vram = track_vram and torch.cuda.is_available()
+        self.tile_size = model_config.tile_size
+        
+        # Statistics tracking
+        self.peak_vram_gb = 0.0
+        self.total_tiles_generated = 0
+        
+    def _update_vram_tracking(self):
+        """Update VRAM usage statistics"""
+        if self.track_vram:
+            current_vram = torch.cuda.memory_allocated() / (1024**3)  # Convert to GB
+            self.peak_vram_gb = max(self.peak_vram_gb, current_vram)
+            return current_vram
+        return None
+
+    def calculate_tiling_parameters(self, image_size: Tuple[int, int]) -> Dict[str, float]:
+        """
+        Calculate optimal tiling parameters for an image.
+        
+        Args:
+            image_size: (height, width) of image
+            
+        Returns:
+            Dictionary containing tiling parameters
+        """
+        height, width = image_size
+        
+        # Calculate tiles needed in each dimension
+        n_tiles_h = max(1, int(np.ceil((width - self.min_overlap[0]) / 
+                                     (self.tile_size - self.min_overlap[0]))))
+        n_tiles_v = max(1, int(np.ceil((height - self.min_overlap[1]) / 
+                                     (self.tile_size - self.min_overlap[1]))))
+        
+        # Calculate actual overlaps
+        overlap_h = ((n_tiles_h * self.tile_size) - width) / max(1, n_tiles_h - 1)
+        overlap_v = ((n_tiles_v * self.tile_size) - height) / max(1, n_tiles_v - 1)
+        
+        # Calculate offsets for last tiles
+        last_tile_offset_x = max(0, width - self.tile_size)
+        last_tile_offset_y = max(0, height - self.tile_size)
+        
+        return {
+            'n_tiles_h': n_tiles_h,
+            'n_tiles_v': n_tiles_v,
+            'overlap_h': overlap_h,
+            'overlap_v': overlap_v,
+            'last_offset_x': last_tile_offset_x,
+            'last_offset_y': last_tile_offset_y
+        }
+
+    def generate_tiles(self, image: torch.Tensor) -> List[Tuple[torch.Tensor, Tuple[int, int]]]:
+        """
+        Generate tiles from input image with optimal overlap.
+        
+        Args:
+            image: Input tensor of shape [C, H, W]
+            
+        Returns:
+            List of (tile, position) tuples
+        """
+        _, height, width = image.shape
+        tiles = []
+        
+        # Get tiling parameters
+        params = self.calculate_tiling_parameters((height, width))
+        
+        # Generate tiles with optimal positioning
+        for y in range(params['n_tiles_v']):
+            for x in range(params['n_tiles_h']):
+                # Calculate tile position
+                if x == params['n_tiles_h'] - 1:  # Last tile in row
+                    x_pos = params['last_offset_x']
+                else:
+                    x_pos = round(x * (self.tile_size - params['overlap_h']))
+                    
+                if y == params['n_tiles_v'] - 1:  # Last tile in column
+                    y_pos = params['last_offset_y']
+                else:
+                    y_pos = round(y * (self.tile_size - params['overlap_v']))
+                
+                # Extract tile
+                tile = image[:, y_pos:y_pos+self.tile_size, x_pos:x_pos+self.tile_size]
+                tiles.append((tile, (x_pos, y_pos)))
+                
+                self.total_tiles_generated += 1
+        
+        self._update_vram_tracking()
+        return tiles
+
+    def reconstruct_image(self, tiles: List[Tuple[torch.Tensor, Tuple[int, int]]], 
+                         original_size: Tuple[int, int]) -> torch.Tensor:
+        """
+        Reconstruct image from processed tiles using smooth blending.
+        
+        Args:
+            tiles: List of (tile_tensor, position) tuples
+            original_size: (height, width) of original image
+            
+        Returns:
+            Reconstructed image tensor
+        """
+        channels = tiles[0][0].shape[0]
+        height, width = original_size
+        reconstructed = torch.zeros((channels, height, width))
+        weights = torch.zeros((height, width))
+        
+        # Get tiling parameters for blending
+        params = self.calculate_tiling_parameters(original_size)
+        
+        # Create feathering patterns for smooth blending
+        h_feather = self._create_feather_pattern(int(params['overlap_h']))
+        v_feather = self._create_feather_pattern(int(params['overlap_v']))
+        
+        # Place tiles with smooth blending
+        for tile, (x, y) in tiles:
+            tile_weight = torch.ones_like(tile[0])
+            
+            # Apply horizontal feathering
+            if x > 0:
+                tile_weight[:, :len(h_feather)] *= h_feather[None, :]
+            if x < params['last_offset_x']:
+                tile_weight[:, -len(h_feather):] *= h_feather.flip(0)[None, :]
+                
+            # Apply vertical feathering
+            if y > 0:
+                tile_weight[:len(v_feather), :] *= v_feather[:, None]
+            if y < params['last_offset_y']:
+                tile_weight[-len(v_feather):, :] *= v_feather.flip(0)[:, None]
+            
+            # Add weighted tile
+            y_end = min(y + self.tile_size, height)
+            x_end = min(x + self.tile_size, width)
+            
+            reconstructed[:, y:y_end, x:x_end] += (
+                tile[:, :y_end-y, :x_end-x] * tile_weight[:y_end-y, :x_end-x]
+            )
+            weights[y:y_end, x:x_end] += tile_weight[:y_end-y, :x_end-x]
+        
+        # Normalize by weights
+        reconstructed /= weights.clamp(min=1e-8)
+        self._update_vram_tracking()
+        
+        return reconstructed
+
+    def _create_feather_pattern(self, size: int) -> torch.Tensor:
+        """Create smooth feathering pattern for tile blending"""
+        return torch.linspace(0, 1, size)
+
+    def get_generation_stats(self) -> TileGenerationStats:
+        """Get statistics about tile generation"""
+        return TileGenerationStats(
+            total_tiles=self.total_tiles_generated,
+            overlap_h=self.min_overlap[0],
+            overlap_v=self.min_overlap[1],
+            coverage_ratio=1.0,  # Updated if tracking coverage
+            vram_usage_gb=self.peak_vram_gb if self.track_vram else None
+        )
+
+    def reset_stats(self):
+        """Reset tile generation statistics"""
+        self.total_tiles_generated = 0
+        self.peak_vram_gb = 0.0
