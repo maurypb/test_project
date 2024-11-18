@@ -29,6 +29,15 @@ class ModelConfig:
     # Channel Configuration
     use_alpha: bool = False  # 4-channel support
     use_attention: bool = True
+    spatial_attention_factor: float = 0.0 # 0.0 means no spatial attention
+    """ we are turning off spatial attention, as it doen't really make sense in this tiled context
+    Additionally, as we are trying to learn a transform of a moving sequence of images, spatial attention
+    would be counterproductive, as it would force the model to focus on specific regions of the changing image,
+    We will leave it in, mainly to see if that theory holds up in practice.
+    We will modify the attention module to allow for a spatial attention factor, which will be multiplied with the spatial attention mask, 
+    We will ignore the spatial attention mask if the factor is 0.0  
+    
+    """
     
     # Residual Configuration
     residual_mode: Literal["early", "late", "both"] = "late"
@@ -242,9 +251,10 @@ class EnhancedMSRBlock(nn.Module):
 
 class AttentionModule(nn.Module):
     """Enhanced attention module with both spatial and channel attention"""
-    def __init__(self, channels: int):
+    def __init__(self, channels: int, spatial_factor: float = 0.0): # Added spatial factor
         super().__init__()
-        
+        self.spatial_factor = spatial_factor
+
         # Channel attention
         self.channel_gate = nn.Sequential(
             nn.AdaptiveAvgPool2d(1),
@@ -254,25 +264,28 @@ class AttentionModule(nn.Module):
             nn.Sigmoid()
         )
         
+
+        if spatial_factor > 0.0: #turn off spatial attention if factor is 0.0
         # Spatial attention with larger receptive field
-        self.spatial_gate = nn.Sequential(
-            nn.Conv2d(channels, channels // 4, 1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(channels // 4, channels // 4, 7, padding=3),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(channels // 4, 1, 1),
-            nn.Sigmoid()
-        )
+            self.spatial_gate = nn.Sequential(
+                nn.Conv2d(channels, channels // 4, 1),
+                nn.ReLU(inplace=True),
+                nn.Conv2d(channels // 4, channels // 4, 7, padding=3),
+                nn.ReLU(inplace=True),
+                nn.Conv2d(channels // 4, 1, 1),
+                nn.Sigmoid()
+            )
         
     def forward(self, x):
         # Channel attention
         chan_att = self.channel_gate(x)
         x = x * chan_att
         
-        # Spatial attention
-        spat_att = self.spatial_gate(x)
-        x = x * spat_att
-        
+        if self.spatial_factor>0:
+            # Spatial attention
+            spat_att = self.spatial_gate(x)
+            x = x * spat_att
+            
         return x
     
 # part 3 model architecture
@@ -320,7 +333,7 @@ class MSRNHybridModel(nn.Module):
             ])
         
         # Optional attention
-        self.attention = AttentionModule(config.base_features) if config.use_attention else None
+        self.attention = AttentionModule(config.base_features,config.spatial_attention_factor) if config.use_attention else None
         
         # Final reconstruction
         self.final = nn.Sequential(
