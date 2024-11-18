@@ -4,6 +4,7 @@ import re
 from typing import List, Set, Optional
 from dataclasses import dataclass
 from msrn_model_v9 import ModelConfig, TrainingConfig, TrainingState
+import torch
 
 @dataclass
 class ChampionModel:

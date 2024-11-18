@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 import logging
-from typing import List, Tuple, Optional
+from typing import List, Tuple, Optional, Dict
 from msrn_model_v9 import ModelConfig, TrainingConfig
 
 class GPUTileManager:
@@ -15,7 +15,8 @@ class GPUTileManager:
                  model_config: ModelConfig,
                  training_config: TrainingConfig,
                  track_coverage: bool = False,
-                 device: str = 'cuda'):
+                 device: str = 'cuda'
+                 ):
         """
         Initialize the GPU Tile Manager.
         
@@ -33,12 +34,12 @@ class GPUTileManager:
         self.device = device
         self.model_config = model_config
         self.training_config = training_config
-        
+        self.track_coverage = track_coverage
         # Store images
         self.source_images = source_images
         self.target_images = target_images
         
-        if track_coverage:
+        if self.track_coverage:
             # Initialize coverage tracking tensors
             self.coverage_tensors = [
                 torch.zeros((img.shape[1], img.shape[2]), device=device) 
@@ -169,7 +170,7 @@ class GPUTileManager:
                     x = max(0, min(int(base_x + offset_x), width - self.tile_size))
                     
                     self.current_tiles.append((img_idx, y, x))
-                    if track_coverage:
+                    if self.track_coverage:
                         self._update_coverage(img_idx, y, x)
         
         # Randomize tile order
